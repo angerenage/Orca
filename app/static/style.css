@@ -1,0 +1,154 @@
+:root {
+    --bg-light: #FFFFFF;
+    --bg-base: #F5F5F5;
+    --bg-dark: #D9D9D9;
+
+    --text-primary: #1E1E1E;
+    --text-secondary: #757575;
+    --text-tertiary: #B3B3B3;
+    --text-inverse: #FFFFFF;
+
+    --border: #D9D9D9;
+    --border-hard: #1E1E1E;
+    --border-primary: #641C31;
+
+    --primary: #972647;
+    --primary-hover: #7A1E3A;
+
+    --alert: #C00F0C;
+    --warn: #DACA1D;
+    --success: #4CAF50;
+    --info: #3495DA;
+
+
+    --radius-small: 5px;
+    --radius-medium: 8px;
+    --radius-full: 9999px;
+}
+
+body {
+    margin: 0;
+    padding: 2rem;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+
+
+
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+
+
+
+
+
+.bg-light {
+    background: var(--bg-light);
+}
+
+.muted {
+    color: var(--text-secondary);
+}
+
+.border {
+    border: 1.5px solid var(--border);
+}
+
+.rounded-small {
+    border-radius: var(--radius-small);
+}
+
+.rounded-medium {
+    border-radius: var(--radius-medium);
+}
+
+.round {
+    border-radius: var(--radius-full);
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.m-sm {
+    margin: 0.5rem;
+}
+
+.m-md {
+    margin: 1rem;
+}
+
+.m-lg {
+    margin: 1.5rem;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.p-sm {
+    padding: 0.5rem;
+}
+
+.p-md {
+    padding: 1rem;
+}
+
+.p-lg {
+    padding: 1.5rem;
+}
+
+.flex {
+    display: flex;
+}
+
+
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.legend {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    font-size: 12px;
+    opacity: .9;
+}
+
+.legend-swatch {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+}

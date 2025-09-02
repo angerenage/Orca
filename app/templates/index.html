@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Metrics API — Charts</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/graph.js" defer></script>
+    <script src="/static/app.js" defer></script>
+    <script>
+        function humanBytes(n) {
+            const units = ['B','KiB','MiB','GiB','TiB'];
+            let u = 0, v = n;
+            while (v >= 1024 && u < units.length - 1) { v /= 1024; u++; }
+            return `${v.toFixed(u ? 1 : 0)} ${units[u]}`;
+        }
+
+        function renderCPU(history, el) {
+            if (!history || !history.length) return;
+            const data = history.map(h => Math.max(0, Math.min(100, Number(h?.cpu?.percent || 0))));
+            const times = history.map(h => h?.timestamp).filter(t => t != null);
+
+            let host = el.querySelector('.chart-host');
+            if (!host) {
+                host = document.createElement('div');
+                host.className = 'chart-host';
+                el.appendChild(host);
+            }
+
+            if (!el._chart) {
+                el._chart = PercentChart(host, 'CPU', [ { name: 'CPU', data } ], { monospaceLabels: true, times });
+            }
+            else {
+                el._chart.setData([ { name: 'CPU', data } ], times);
+            }
+        }
+
+        function renderMemory(history, el) {
+            if (!history || !history.length) return;
+            const ram = history.map(h => Math.max(0, Math.min(100, Number(h?.memory?.percent || 0))));
+            const swap = history.map(h => Math.max(0, Math.min(100, Number(h?.swap?.percent || 0))));
+            const times = history.map(h => h?.timestamp).filter(t => t != null);
+            const last = history[history.length - 1] || {};
+            const ramUsed = Number(last?.memory?.used || 0);
+            const ramTotal = Number(last?.memory?.total || 0);
+            const swapUsed = Number(last?.swap?.used || 0);
+            const swapTotal = Number(last?.swap?.total || 0);
+            const legendValues = [
+                `${humanBytes(ramUsed)} / ${humanBytes(ramTotal)} (${Math.round(ramUsed / ramTotal * 100)}%)`,
+                `${humanBytes(swapUsed)} / ${humanBytes(swapTotal)} (${Math.round(swapUsed / swapTotal * 100)}%)`
+            ];
+
+            let host = el.querySelector('.chart-host');
+            if (!host) {
+                host = document.createElement('div');
+                host.className = 'chart-host';
+                el.appendChild(host);
+            }
+
+            const series = [
+                { name: 'RAM', data: ram },
+                { name: 'SWAP', data: swap }
+            ];
+            if (!el._chart) {
+                el._chart = PercentChart(host, 'Memory', series, { monospaceLabels: true, times, legendValues });
+            }
+            else {
+                el._chart.setData(series, times, legendValues);
+            }
+        }
+
+        function renderUptime(history, el) {
+            if (!history || !history.length) return;
+            const last = history[history.length - 1];
+            const uptime = Number(last?.uptime_seconds || 0);
+
+            const days = Math.floor(uptime / 86400);
+            const hours = Math.floor((uptime % 86400) / 3600);
+            const minutes = Math.floor((uptime % 3600) / 60);
+            const seconds = uptime % 60;
+            el.textContent = `Alive ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+    </script>
+</head>
+<body>
+    <div class="row space-between">
+        <div>
+            <h1 class="m-0">Server {{ server_name }}</h1>
+            <p class="m-0 muted">{{ ip }}</p>
+        </div>
+        <p class="muted" sse-url="/api/metrics/stream" sse-event="metrics" sse-mode="append" sse-cache-size="60" sse-render="renderUptime">Alive {{ uptime_formatted }}</p>
+    </div>
+    <div class="grid">
+        <section class="p-md bg-light border rounded-small" id="CPU-metrics">
+            <div
+                class="metric"
+                sse-url="/api/metrics/stream"
+                sse-event="metrics"
+                sse-mode="append"
+                sse-cache-size="60"
+                sse-render="renderCPU">
+            </div>
+        </section>
+        <section class="p-md bg-light border rounded-small" id="memory-metrics">
+            <div
+                class="metric"
+                sse-url="/api/metrics/stream"
+                sse-event="metrics"
+                sse-mode="append"
+                sse-cache-size="60"
+                sse-render="renderMemory">
+            </div>
+        </section>
+    </div>
+</body>
+</html>
