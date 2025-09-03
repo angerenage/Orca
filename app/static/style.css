@@ -15,9 +15,9 @@
     --primary: #972647;
     --primary-hover: #7A1E3A;
 
-    --alert: #C00F0C;
+    --error: #C00F0C;
     --warn: #DACA1D;
-    --success: #4CAF50;
+    --ok: #14AE5C;
     --info: #3495DA;
 
 
@@ -60,11 +60,6 @@ header {
     margin-left: auto;
 }
 
-.logo {
-    height: 2.5rem;
-    margin: 5px;
-}
-
 .content {
     display: flex;
     flex: 1;
@@ -97,6 +92,23 @@ footer {
     text-align: center;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+form button[type="submit"] {
+    align-self: end;
+    margin-top: 1rem;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: left;
+}
 
 
 
@@ -203,7 +215,9 @@ footer {
     padding: 1.5rem;
 }
 
-
+.text-center {
+    text-align: center;
+}
 
 
 
@@ -211,6 +225,7 @@ button, .button {
     background: var(--primary);
     color: var(--text-inverse);
     text-decoration: none;
+    font-size: 16px;
     border: var(--border-style) var(--border-primary);
     border-radius: var(--radius-medium);
     padding: 5px 10px;
@@ -232,6 +247,38 @@ button.ghost:hover, .button.ghost:hover {
     background: var(--bg-dark);
 }
 
+input {
+    background-color: var(--bg-base);
+    border: var(--border-style) var(--border);
+    border-radius: var(--radius-medium);
+    padding: 0.5rem;
+    font-size: 16px;
+}
+
+.logo {
+    height: 2.5rem;
+    margin: 5px;
+}
+
+.logo-large {
+    height: 4rem;
+    margin: 1.5rem;
+}
+
+.card {
+    background: var(--bg-light);
+    border: var(--border-style) var(--border);
+    border-radius: var(--radius-medium);
+    padding: 2rem;
+    text-align: center;
+    min-width: 35%;
+    margin: auto;
+}
+
+.icon-small {
+    height: 1rem;
+    width: 1rem;
+}
 
 
 
@@ -268,4 +315,26 @@ button.ghost:hover, .button.ghost:hover {
 
 .legend-value {
     font-weight: bold;
+}
+
+.alert {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.alert.error {
+    color: var(--error);
+}
+
+.alert.warn {
+    color: var(--warn);
+}
+
+.alert.info {
+    color: var(--info);
+}
+
+.alert.ok {
+    color: var(--ok);
 }

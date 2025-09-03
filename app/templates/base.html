@@ -10,14 +10,18 @@
 </head>
 <body>
     <header>
-        <img src="/static/orca-long-dark.svg" alt="Orca Logo" class="logo">
+        <a href="/"><img src="/static/orca-long-dark.svg" alt="Orca Logo" class="logo"></a>
         <nav>
             <a href="/" class="button ghost">Home</a>
             <a href="/settings" class="button ghost">Settings</a>
         </nav>
         <div class="flex ml-auto align-center">
-            <a href="/login" class="button">Login</a>
-            <img src="/static/default-avatar.png" alt="User Avatar" class="avatar">
+            {% if request.session.get('user_email') %}
+                <a href="/logout" class="button ghost">Logout</a>
+                <img src="{{ request.session.get('user_email') | gravatar(40) }}" alt="User Avatar" class="avatar">
+            {% else %}
+                <a href="/login" class="button">Login</a>
+            {% endif %}
         </div>
     </header>
     <div class="content">

@@ -1,0 +1,6 @@
+{% macro alert(status, message) %}
+<p class="alert {{ status }}">
+    <img src="/static/alerts/alert-{{ status }}.svg" alt="{{ status | capitalize }}" class="icon-small" />
+    {{ message }}
+</p>
+{% endmacro %}
