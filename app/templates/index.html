@@ -1,10 +1,8 @@
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Metrics API — Charts</title>
-    <link rel="stylesheet" href="/static/style.css">
+{% extends "base.html" %}
+
+{% block title %}Orca - Home{% endblock %}
+
+{% block head %}
     <script src="/static/graph.js" defer></script>
     <script src="/static/app.js" defer></script>
     <script>
@@ -81,8 +79,9 @@
             el.textContent = `Alive ${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
     </script>
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
     <div class="row space-between">
         <div>
             <h1 class="m-0">Server {{ server_name }}</h1>
@@ -112,5 +111,4 @@
             </div>
         </section>
     </div>
-</body>
-</html>
+{% endblock %}

@@ -115,9 +115,6 @@ const PercentChart = (target, title, series, opts = {}) => {
     if (!legendEl) {
         legendEl = document.createElement('div');
         legendEl.className = 'legend';
-        legendEl.style.display = 'flex';
-        legendEl.style.gap = '12px';
-        legendEl.style.alignItems = 'center';
         headerWrap.appendChild(legendEl);
     }
     let currentValues = [];
@@ -145,7 +142,6 @@ const PercentChart = (target, title, series, opts = {}) => {
             if (values[i] !== undefined && values[i] !== null) {
                 const val = document.createElement('span');
                 val.className = 'legend-value';
-                val.style.fontWeight = 'bold';
                 const vv = values[i];
                 val.textContent = (typeof vv === 'string') ? vv : cfg.legendFormat(vv, i, s);
                 item.appendChild(val);
